@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.1">
+  <head>
+    <title>Feeds</title>
+  </head>
+  <body>
+    <outline title="News" text="News">
+      <outline type="rss" title="Hacker News" text="Hacker News" htmlUrl="https://news.ycombinator.com/" xmlUrl="http://news.ycombinator.com/rss"/>
+    </outline>
+  </body>
+</opml>

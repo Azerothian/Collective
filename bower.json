@@ -1,0 +1,17 @@
+{
+  "name": "Collective",
+  "version": "0.0.1",
+  "main": "public/js/app.js",
+  "ignore": [ ],
+  "dependencies": {
+    "backbone-amd": "*",
+	"bootstrap": "3.0.0-rc1",
+	"underscore-amd": "*",
+	"jquery": "*",
+	"jquery-ui": "1.9.0",
+	"requirejs": "*",
+	"requirejs-text": "*",
+	"require-css": "*",
+	"jsui": "*"
+  }
+}

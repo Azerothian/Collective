@@ -1,0 +1,14 @@
+{
+  "name": "jsui",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Azerothian/jsui.git"
+  },
+  "gitHead": "b1afd55199a361655dd4bdf842c5a8b2a5e0ab78",
+  "readme": "jsui\r\n====\r\n\r\nControl based ui system with backbone and jqueryui\r\n",
+  "readmeFilename": "README.md",
+  "_id": "jsui@0.2.0",
+  "description": "jsui\r ====",
+  "commit": "b1afd55199a361655dd4bdf842c5a8b2a5e0ab78"
+}
