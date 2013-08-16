@@ -1,16 +1,18 @@
-var freeport = require('freeport');
+var portchecker = require('portchecker');
 var phantom = require('phantom');
 var u_ = require('underscore');
 var z = require('../util/util.js');
 var image = require('./Image');
+var chokidar = require('chokidar');
 
 exports.DoesArticleHaveKeywords = function(data)
 {
   //console.log("[Web] DoesArticleHaveKeywords");
-
-	freeport(function(er, port) {
+portchecker.getFirstAvailable(16001, 50000, process.env.HOST, function(p, host) {
+//	freeport(function(er, port) {
 		phantom.create({
-			port: port, 
+            hostname: process.env.IP,
+			port: p, 
 			binary: require('phantomjs').path
 		},
    function(phantism) {
@@ -59,24 +61,41 @@ exports.DoesArticleHaveKeywords = function(data)
 
 exports.RenderArticle = function(data)
 {
-  console.log("Init Render!!", data.article.link);
- // var path = __dirname + '\\data\\' + data.article._id + '.jpg';
-  data.page.set('viewportSize', { width:1024, height:768 })
-  data.page.render(data.path);
-  image.splitImageIntoHorizontalSegs({
-    path: data.path,
-    targetpath: data.targetpath,
-    segmentsize: 200,
-    success: function(obj)
-    {
-
-      z.callonce({funcName: "success", toRemove: ["success", "error"], obj: u_.extend({
-        segments: obj.count
-      },data)});
-    }
-  });
-
-  
+    console.log("Init Render!!", data.article.link);
+    // var path = __dirname + '\\data\\' + data.article._id + '.jpg';
+    data.page.set('viewportSize', { width:1024, height:768 });
+    
+    var watcher = chokidar.watch(data.path, {});
+    
+    var splitFunc = function() { 
+        console.log("SPLICATA");
+        image.splitImageIntoHorizontalSegs(
+        {
+            path: data.path,
+            targetpath: data.targetpath,
+            segmentsize: 200,
+            success: function(obj)
+            {
+                z.callonce(
+                {
+                    funcName: "success", 
+                    toRemove: ["success", "error"], 
+                    obj: u_.extend(
+                    {
+                        segments: obj.count
+                    },data)
+                    
+                });
+            }
+        });
+        watcher.close();
+    };
+    
+    watcher.on("add", splitFunc);
+    watcher.on("change", splitFunc);
+    
+    data.page.render(data.path);
+ 
 }
 
 

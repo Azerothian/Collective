@@ -1,6 +1,6 @@
 ///////////////////////MONGO !!! :D
 var mongojs = require('mongojs');
-var db = mongojs('articles', ['articles']); // lol
+var db = mongojs(process.env.IP +'/articles', ['articles']); // lol
 var u_ = require('underscore');
 var z = require('../util/util.js');
 

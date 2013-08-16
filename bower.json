@@ -8,7 +8,7 @@
 	"bootstrap": "3.0.0-rc1",
 	"underscore-amd": "*",
 	"jquery": "*",
-	"jquery-ui": "1.9.0",
+	"jquery-ui": "*",
 	"requirejs": "*",
 	"requirejs-text": "*",
 	"require-css": "*",

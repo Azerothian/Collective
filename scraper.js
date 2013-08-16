@@ -8,7 +8,7 @@
 
  var job1 = new cronJob('0 */1 * * * *', function() {
   //OnJob
-  console.log("Processing the feed...")
+  console.log("Processing the feed...");
   logic.feed.ProcessFile(
     { 
       file: "subscriptions.opml", 
@@ -26,14 +26,14 @@
                // console.log("EVERYONE HAPPY!!! ");
                 //More stuff
               }
-            })
+            });
           },
           yes: function(data){
-            // Already Exists do nothing
+            // Already Exists do nothing1
 
           }
 
-        })
+        });
       }
     });
  },
@@ -46,7 +46,7 @@
 
  var job2 = new cronJob('30 * * * * *', function() {
   //OnJob
-  console.log("Checking for articles to process...")
+  console.log("Checking for articles to process...");
   logic.data.CheckForUnProcessedArticle({
           yes: function(data)
           {
@@ -55,12 +55,14 @@
               u_.extend({ 
                 keywords: ["GPL", "GNU", "C#", ".NET", "public void", "module.exports", "node", "nodejs", "require", "cpp", ".cs", "erlang", "ruby", "using ", "csharp", " git ", "svn", "java", "php", "html5", "js"],
                 yes: function(data){
-                  var path = __dirname + '\\data\\' + data.article._id + '.jpg';
-                  var targetpath = __dirname + '\\data\\' + data.article._id + '\\';
+                    console.log("good article")
+                  var path = __dirname + '/public/articles/' + data.article._id + '.jpg';
+                  var targetpath = __dirname + '/public/articles/' + data.article._id + '/';
                   logic.web.RenderArticle( u_.extend({ 
                     path: path,
                     targetpath: targetpath,
                     success: function(data) {
+                        console.log("updating good article")
                    //   var __attr = { isvalid:true, processed: true, segments: data.segments, fullrender: path, keywords: data.keywords };
                       logic.data.UpdateArticle({
                         query: { _id: data.article._id }, 
@@ -82,15 +84,16 @@
                 no: function(data)
                 {
                   //var __attr = { isvalid:false, processed: true };
-
-                  logic.data.UpdateArticle({
-                    query: { _id: data.article._id }, 
-                    change: { $set: { 
-                      "__attr.isvalid":false, 
-                      "__attr.processed": true
-                    } },
+                    console.log("invalid found")
+                    logic.data.UpdateArticle({
+                        query: { _id: data.article._id }, 
+                        change: { $set: { 
+                            "__attr.isvalid":false, 
+                            "__attr.processed": true
+                        } 
+                    },
                     success: function() {
-                      console.log("BAD ARTICLE SAVED!!", data.article.link)
+                        console.log("BAD ARTICLE SAVED!!", data.article.link)
                     }
                   });
                 }
@@ -100,7 +103,7 @@
           no: function(data)
           {
             //do nothing?
-
+            console.log("NOTHING TO PROCESS")
           }
         })
  },

@@ -19,6 +19,9 @@
     "mongojs": "*",
     "underscore": "*",
     "freeport": "*",
-    "node-vips": "*"
+    "canvas": "*",
+    "mkdirp": "*",
+    "portchecker": "*",
+    "chokidar": "*"
   }
 }
