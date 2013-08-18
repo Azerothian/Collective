@@ -1,3 +1,6 @@
+
+
+
 var app = app || {};
 app.Logic = app.Logic || {};
 
@@ -18,8 +21,14 @@ requirejs.config({
         'text': 'requirejs-text/text',
         'css': 'require-css/css',
         'normalize': 'require-css/normalize',
+        'iobind': 'backbone.iobind/backbone.iobind',
+        'iosync': 'backbone.iobind/backbone.iosync',
+        'socketio': '/socket.io/socket.io'
     },
     shim: {
+        'socketio': {
+            exports: 'io'
+        },
         jquery: {
             exports: '$'
         },
@@ -32,9 +41,9 @@ requirejs.config({
         bootstrap: {
             deps: ['underscore']
         },
-        backbone: {
+        Backbone: {
             deps: ['underscore', 'jquery'],
-            exports: 'backbone'
+            exports: 'Backbone'
         }
     }
 
@@ -43,17 +52,19 @@ requirejs([
     'jquery',
     'underscore',
     'backbone',
-    'jsui/jsui'
+    'jsui/jsui',
+    'logic/sockio_c'
 ],
     function (
         $,
         _,
         Backbone,
-        JSui
+        JSui,
+        Sockio
     ) {
         console.log('App Starting up...');
 
-//        app.Logic.Auth = new AuthLogic;
+        app.Logic.Sockio = new Sockio();
 //        app.Logic.Ui = new UiLogic;
 //        app.Data = new DataLogic;
         app.jsui = new JSui();
@@ -98,6 +109,10 @@ requirejs([
         });
         app.Logic.Router.loadView = function (model, func, success) {
             requirejs(["views/" + model + "/" + func], function (view) {
+                if(view === undefined)
+                {
+                    throw "View not able to execute: func: " + func + " model:" + model;
+                }
                 var v = new view();
                 if (success) {
                     success(v);
@@ -111,9 +126,7 @@ requirejs([
 
 
         Backbone.history.start();
-
-
-
+        app.Logic.Router.loadView("article", "list");
 // INIT HERE
 
     });

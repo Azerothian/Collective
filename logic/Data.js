@@ -4,6 +4,8 @@ var db = mongojs(process.env.IP +'/articles', ['articles']); // lol
 var u_ = require('underscore');
 var z = require('../util/util.js');
 
+//db.articles.remove({});
+
 exports.CheckIfArticleExists = function(data)
 {
 	//console.log("[Data] CheckIfArticleExists");
@@ -24,6 +26,12 @@ exports.CheckIfArticleExists = function(data)
 			 });
 			}
 	);
+}
+
+exports.fetch = function(where, action)
+{
+    db.articles.find(where, action)
+
 }
 
 exports.CheckForUnProcessedArticle = function(data)

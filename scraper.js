@@ -23,7 +23,7 @@
               article: data.article,
               success: function(data)
               {
-               // console.log("EVERYONE HAPPY!!! ");
+                console.log("EVERYONE HAPPY!!! ");
                 //More stuff
               }
             });
@@ -77,6 +77,10 @@
                           console.log("GOOD ARTICLE SAVED!!", data.article.link)
                         }
                       });
+                    },
+                    error: function(data) {
+                        console.log(data.errorMessage);
+                        
                     }
                   }, data));
                   

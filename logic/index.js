@@ -4,3 +4,4 @@ exports.data = require('./Data');
 exports.feed = require('./Feed');
 exports.web = require('./Web');
 exports.image = require('./Image');
+exports.sockio = require('./Sockio_s');
